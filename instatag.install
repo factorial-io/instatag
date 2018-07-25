@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Perform clean up at module uninstall.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function instatag_uninstall() {
+  variable_del('instatag_snippet_url');
+}

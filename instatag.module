@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * @file
+ * Inject instatag snippet.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function instatag_permission() {
+  return array(
+    'administer Instatag Settings' => array(
+      'title' => t('Administer Instatag Settings'),
+      'description' => t('Administer BI DTM Instatag Settings'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function instatag_menu() {
+  $items = array();
+
+  $items['admin/instatag'] = array(
+    'title' => 'Instatag',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('instatag_settings'),
+    'access arguments' => array('administer Instatag Settings'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'instatag.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function instatag_preprocess_html(&$variables) {
+  $node = _instatag_menu_get_object();
+  $node_is_published = instatag_published_revision_state($node);
+
+  if (($url = variable_get('instatag_snippet_url', FALSE)) && current_path(path_is_admin() && $node_is_published)) {
+    drupal_add_js($url, 'external');
+  }
+}
+
+/**
+ * Implements hook_html_head_alter().
+ */
+function instatag_html_head_alter(&$head_elements) {
+  // Unset datalayer_meta.
+  unset($head_elements['datalayer_js']);
+}
+
+/**
+ * Implements hook_js_alter().
+ */
+function instatag_js_alter(&$javascript) {
+  foreach (array_keys($javascript) as $key) {
+    if (strpos($key, 'adobedtm') !== FALSE) {
+      unset($javascript[$key]);
+    }
+  };
+}
+
+/**
+ * Workaround for menu_get_object() to load nodes in draft state.
+ */
+function _instatag_menu_get_object() {
+  $node = &drupal_static(__FUNCTION__);
+  if (!isset($node)) {
+    if ($node = menu_get_object()) {
+      if (module_exists('workbench_moderation')) {
+        $request_path = request_path();
+        $current_paths = array('/^node\/(\d+)\/draft/', '/^node\/(\d+)\/current-revision/');
+        foreach ($current_paths as $path) {
+          if (preg_match($path, $request_path)) {
+            $node = workbench_moderation_node_current_load($node);
+          }
+        }
+      }
+    }
+    else {
+      $node = FALSE;
+    }
+  }
+  return $node ? $node : NULL;
+}
+
+/**
+ * Check if the node is in the published state.
+ */
+function instatag_published_revision_state($node) {
+  if (isset($node->workbench_moderation['published']->vid) && isset($node->type)) {
+    $state = $node->workbench_moderation;
+    if ($state['my_revision']->state == 'published') {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
