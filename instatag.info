@@ -1,8 +1,6 @@
-name = BI DTM Instatag
-description = BI DTM Instatag Integration.
+name = Instatag
+description = Instatag Integration.
 core = 7.x
-package = BI SPBTH Core
-version = 7.x-3.0
+package = Analytics
 dependencies[] = datalayer
-dependencies[] = bi_dtm_common
 configure = admin/instatag
