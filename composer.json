@@ -1,0 +1,6 @@
+{
+  "name": "factorial-io/instatag",
+  "description": "Integration with instatag",
+  "type": "drupal-module",
+  "license": "MIT"
+}
