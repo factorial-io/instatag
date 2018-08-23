@@ -25,7 +25,7 @@ function instatag_install() {
 }
 
 /**
- * Delete {system} records for long-lost modules.
+ * Set default URL.
  */
 function instatag_update_7001() {
   variable_set('instatag_snippet_url, 'https://script.bi-instatag.com');
