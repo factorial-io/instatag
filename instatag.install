@@ -11,3 +11,22 @@
 function instatag_uninstall() {
   variable_del('instatag_snippet_url');
 }
+
+/**
+ * Implements hook_install().
+ */
+function instatag_install() {
+  for ($i = 7001; $i < 8000; $i++) {
+    $candidate = 'instatag_update_' . $i;
+    if (function_exists($candidate)) {
+      $candidate();
+    }
+  }
+}
+
+/**
+ * Delete {system} records for long-lost modules.
+ */
+function instatag_update_7001() {
+  variable_set('instatag_snippet_url, '');
+}
