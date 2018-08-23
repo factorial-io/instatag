@@ -28,5 +28,5 @@ function instatag_install() {
  * Delete {system} records for long-lost modules.
  */
 function instatag_update_7001() {
-  variable_set('instatag_snippet_url, '');
+  variable_set('instatag_snippet_url, 'https://script.bi-instatag.com');
 }
