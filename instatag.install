@@ -25,8 +25,8 @@ function instatag_install() {
 }
 
 /**
- * Set default URL.
+ * Set instatag snippet url to https://script.bi-instatag.com.
  */
 function instatag_update_7001() {
-  variable_set('instatag_snippet_url, 'https://script.bi-instatag.com');
+  variable_set('instatag_snippet_url', 'https://script.bi-instatag.com');
 }
