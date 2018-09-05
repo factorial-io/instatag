@@ -42,7 +42,7 @@ function instatag_preprocess_html(&$variables) {
   $node = _instatag_menu_get_object();
   $node_is_published = instatag_published_revision_state($node);
 
-  if (($url = variable_get('instatag_snippet_url', FALSE)) && path_is_admin(current_path()) && $node_is_published) {
+  if (($url = variable_get('instatag_snippet_url', FALSE)) && !path_is_admin(current_path()) && $node_is_published) {
     drupal_add_js($url, 'external');
   }
 }
