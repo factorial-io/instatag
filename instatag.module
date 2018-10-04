@@ -39,10 +39,29 @@ function instatag_menu() {
  * Implements hook_preprocess_html().
  */
 function instatag_preprocess_html(&$variables) {
-  $node = _instatag_menu_get_object();
-  $node_is_published = instatag_published_revision_state($node);
+  $add_instatag_to_page = TRUE;
+  $url = variable_get('instatag_snippet_url', FALSE);
 
-  if (($url = variable_get('instatag_snippet_url', FALSE)) && !path_is_admin(current_path()) && $node_is_published) {
+  // If instatag url is not defnied, don't add instatag.
+  if (empty($url)) {
+    $add_instatag_to_page = FALSE;
+  }
+
+  // Avoid adding instatag to admin pages.
+  if (path_is_admin(current_path())) {
+    $add_instatag_to_page = FALSE;
+  }
+
+  $node = _instatag_menu_get_object();
+  if ($node) {
+    $node_is_published = instatag_published_revision_state($node);
+    // If current page is a node and its not published, don't add instatag.
+    if ($node_is_published === FALSE) {
+      $add_instatag_to_page = FALSE;
+    }
+  }
+
+  if ($add_instatag_to_page === TRUE) {
     drupal_add_js($url, 'external');
   }
 }
