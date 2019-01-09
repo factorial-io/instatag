@@ -63,11 +63,8 @@ function instatag_preprocess_html(&$variables) {
 
   if ($add_instatag_to_page === TRUE) {
     $elem = array(
-      '#tag' => 'script',
-      '#attributes' => array(
-        'src' => $url,
-      ),
-      '#suffix' => '</script>',
+      '#type' => 'markup',
+      '#markup' => sprintf('<script type="text/javascript" src="%s"></script>', $url),
       '#weight' => 1000,
     );
     drupal_add_html_head($elem, 'instatag');
