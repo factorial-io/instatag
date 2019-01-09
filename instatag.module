@@ -61,13 +61,14 @@ function instatag_preprocess_html(&$variables) {
     }
   }
 
+  $variables['instatag'] = '';
   if ($add_instatag_to_page === TRUE) {
     $elem = array(
       '#type' => 'markup',
       '#markup' => sprintf('<script type="text/javascript" src="%s"></script>', $url),
       '#weight' => 1000,
     );
-    drupal_add_html_head($elem, 'instatag');
+    $variables['instatag'] = $elem;
   }
 }
 
