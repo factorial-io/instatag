@@ -62,7 +62,15 @@ function instatag_preprocess_html(&$variables) {
   }
 
   if ($add_instatag_to_page === TRUE) {
-    drupal_add_js($url, 'external');
+    $elem = array(
+      '#tag' => 'script',
+      '#attributes' => array(
+        'src' => $url,
+      ),
+      '#suffix' => '</script>',
+      '#weight' => 1000,
+    );
+    drupal_add_html_head($elem, 'instatag');
   }
 }
 
