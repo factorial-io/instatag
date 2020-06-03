@@ -125,5 +125,8 @@ function instatag_published_revision_state($node) {
       return TRUE;
     }
   }
+  elseif (!isset($node->workbench_moderation) && $node->status) {
+    return TRUE;
+  }
   return FALSE;
 }
