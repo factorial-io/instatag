@@ -65,7 +65,7 @@ function instatag_preprocess_html(&$variables) {
   if ($add_instatag_to_page === TRUE) {
     $elem = array(
       '#type' => 'markup',
-      '#markup' => sprintf('<script src="%s"></script>', $url),
+      '#markup' => sprintf('<script>%s</script>', $url),
       '#weight' => 1000,
     );
     $variables['instatag'] = $elem;
@@ -129,4 +129,11 @@ function instatag_published_revision_state($node) {
     return TRUE;
   }
   return FALSE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter.
+ */
+function instatag_form_instatag_settings_alter(&$form, &$form_state, $form_id) {
+  $form['instatag_snippet_url']['#maxlength'] = 512;
 }

@@ -25,8 +25,9 @@ function instatag_install() {
 }
 
 /**
- * Set instatag snippet url to https://script.bi-instatag.com.
+ * Set instatag snippet url to default content.
  */
 function instatag_update_7001() {
-  variable_set('instatag_snippet_url', 'https://script.bi-instatag.com');
+  $content = '(function(){var script=document.createElement("script");script.src=`https://script.bi-instatag.com?ref=${encodeURIComponent(window.location.href)}`;document.head.appendChild(script);})();';
+  variable_set('instatag_snippet_url', $content);
 }
