@@ -40,7 +40,7 @@ function instatag_menu() {
  */
 function instatag_preprocess_html(&$variables) {
   $add_instatag_to_page = TRUE;
-  $url = variable_get('instatag_snippet_url', FALSE);
+  $url = variable_get('instatag_snippet', FALSE);
 
   // If instatag url is not defnied, don't add instatag.
   if (empty($url)) {
@@ -129,11 +129,4 @@ function instatag_published_revision_state($node) {
     return TRUE;
   }
   return FALSE;
-}
-
-/**
- * Implements hook_form_FORM_ID_alter.
- */
-function instatag_form_instatag_settings_alter(&$form, &$form_state, $form_id) {
-  $form['instatag_snippet_url']['#maxlength'] = 512;
 }

@@ -6,10 +6,10 @@
 function instatag_settings() {
   $form = array();
 
-  $form['instatag_snippet_url'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Instatag snippet url'),
-    '#default_value' => variable_get('instatag_snippet_url', ''),
+  $form['instatag_snippet'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Instatag snippet'),
+    '#default_value' => variable_get('instatag_snippet', ''),
     '#required' => TRUE,
   );
 
