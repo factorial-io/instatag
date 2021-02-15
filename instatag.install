@@ -9,13 +9,19 @@
  * Implements hook_uninstall().
  */
 function instatag_uninstall() {
-  variable_del('instatag_snippet_url');
+  variable_del('instatag_snippet');
 }
 
 /**
  * Implements hook_install().
  */
 function instatag_install() {
+  $content = '(function(){
+      var script=document.createElement("script");
+      script.src=`https://script.bi-instatag.com?ref=${encodeURIComponent(window.location.href)}`;
+      document.head.appendChild(script);
+      })();';
+  variable_set('instatag_snippet', $content);
   for ($i = 7001; $i < 8000; $i++) {
     $candidate = 'instatag_update_' . $i;
     if (function_exists($candidate)) {
@@ -25,8 +31,14 @@ function instatag_install() {
 }
 
 /**
- * Set instatag snippet url to https://script.bi-instatag.com.
+ * Set instatag snippet url to default content.
  */
 function instatag_update_7001() {
-  variable_set('instatag_snippet_url', 'https://script.bi-instatag.com');
+  variable_del('instatag_snippet_url');
+  $content = '(function(){
+      var script=document.createElement("script");
+      script.src=`https://script.bi-instatag.com?ref=${encodeURIComponent(window.location.href)}`;
+      document.head.appendChild(script);
+      })();';
+  variable_set('instatag_snippet', $content);
 }

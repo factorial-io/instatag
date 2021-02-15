@@ -40,7 +40,7 @@ function instatag_menu() {
  */
 function instatag_preprocess_html(&$variables) {
   $add_instatag_to_page = TRUE;
-  $url = variable_get('instatag_snippet_url', FALSE);
+  $url = variable_get('instatag_snippet', FALSE);
 
   // If instatag url is not defnied, don't add instatag.
   if (empty($url)) {
@@ -65,7 +65,7 @@ function instatag_preprocess_html(&$variables) {
   if ($add_instatag_to_page === TRUE) {
     $elem = array(
       '#type' => 'markup',
-      '#markup' => sprintf('<script src="%s"></script>', $url),
+      '#markup' => sprintf('<script>%s</script>', $url),
       '#weight' => 1000,
     );
     $variables['instatag'] = $elem;
