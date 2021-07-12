@@ -42,3 +42,10 @@ function instatag_update_7001() {
       })();';
   variable_set('instatag_snippet', $content);
 }
+
+/**
+ * Rerun update hook.
+ */
+function instatag_update_7002() {
+  instatag_update_7001();
+}
