@@ -49,3 +49,12 @@ function instatag_update_7001() {
 function instatag_update_7002() {
   instatag_update_7001();
 }
+
+/**
+ * Use correct snippet.
+ */
+function instatag_update_7003() {
+  $content = '(function(){var script=document.createElement("script");script.src="https://script.bi-instatag.com?ref="+encodeURIComponent(window.location.href)+"";document.head.appendChild(script);})();';
+  variable_set('instatag_snippet', $content);
+  variable_set('instatag_snippet_include_ref', FALSE);
+}
